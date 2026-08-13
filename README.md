@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Online Shopping Management System
 
-## Getting Started
+Welcome to the Online Shopping Management System repository! This is a modern, full-stack e-commerce application built with Next.js and MongoDB.
 
-First, run the development server:
+## Live Demo
+🔗 **[Live Deployment on Vercel](https://online-shopping-mocha-six.vercel.app)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
+- **Framework:** Next.js (App Router, v16)
+- **UI Library:** React (v19)
+- **Styling:** Tailwind CSS (v4)
+- **Database:** MongoDB
+- **ODM:** Mongoose
+- **Authentication:** NextAuth.js (v5 beta)
+- **Security:** bcryptjs
+- **Email Service:** nodemailer
+- **Icons:** lucide-react
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features Implemented
+- **User Authentication:** Robust authentication system with Sign Up, Sign In, and secure session management.
+- **Email Verification:** Account verification via email to ensure valid users.
+- **Password Management:** Forgot password and secure reset password flows.
+- **Product Catalog:** Browse and view comprehensive product listings.
+- **Categories:** Organize products by category for easy navigation.
+- **Product Details:** Dedicated product pages with specific item information.
+- **Reviews & Ratings:** Users can leave and view reviews for products.
+- **Wishlist:** Users can add their favorite items to a personalized wishlist.
+- **Shopping Cart & Checkout:** Seamless user flow from cart to checkout.
+- **User Profile:** Manage user details and view personal activity.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## User Flow
+1. **Onboarding:** A user can register via the `/signup` page and will receive a verification email.
+2. **Verification:** The user verifies their account via the `/verify` page using the received code.
+3. **Authentication:** The user logs in via the `/signin` page. If they forget their password, they can use `/forgot-password` to receive a reset code and proceed to `/reset-password`.
+4. **Browsing:** Users can explore products on the home page, browse by `/categories`, or view the full list at `/products`.
+5. **Product Interaction:** Selecting a product takes the user to its detail page (`/products/[id]`), where they can read reviews and add the item to their cart or wishlist.
+6. **Wishlist:** Users can view and manage their saved items on the `/wishlist` page.
+7. **Checkout:** Users can proceed to `/checkout` to finalize their purchase.
+8. **Profile Management:** Users can view and update their personal information via the `/profile` page.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## APIs Connected
+The application uses the following internal Next.js API routes:
 
-## Learn More
+**Auth & User Management:**
+- `/api/auth/[...nextauth]` - NextAuth authentication endpoints (Session management)
+- `/api/auth/signup` - User registration
+- `/api/auth/verify` - Account email verification
+- `/api/auth/forgot-password` - Trigger password reset email
+- `/api/auth/reset-password` - Process password reset
+- `/api/auth/resend-code` - Resend verification/reset codes
+- `/api/profile` - User profile data operations
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**E-commerce Core:**
+- `/api/categories` - Fetch and manage product categories
+- `/api/products` - Fetch and manage products
+- `/api/reviews` - Product reviews and ratings
+- `/api/wishlist` - Manage user wishlist items
