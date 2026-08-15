@@ -3,7 +3,7 @@
 Welcome to the Online Shopping Management System repository! This is a modern, full-stack e-commerce application built with Next.js and MongoDB.
 
 ## Live Demo
-🔗 **[Live Deployment on Vercel](https://online-shopping-mocha-six.vercel.app)**
+🔗 **[Live Deployment on Vercel](https://online-shopping-management-eight.vercel.app)**
 
 ## Tech Stack
 - **Framework:** Next.js (App Router, v16)
