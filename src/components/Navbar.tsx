@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { ShoppingCart, Heart, Sun, Moon, Menu, X, User as UserIcon, LogOut } from "lucide-react";
+import { ShoppingCart, Heart, Sun, Moon, Menu, X, User as UserIcon, LogOut, LayoutDashboard } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useCart } from "@/context/CartContext";
@@ -49,7 +49,7 @@ export default function Navbar() {
 
         {/* Actions (Icons & Auth) */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/wishlist" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors relative flex items-center justify-center p-1">
+          <Link href="/dashboard/wishlist" className="text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors relative flex items-center justify-center p-1">
             <Heart size={22} />
             {wishlistItems.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
@@ -165,7 +165,10 @@ export default function Navbar() {
                       <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{session.user?.name}</p>
                       <p className="text-xs text-slate-500 truncate">{session.user?.email}</p>
                     </div>
-                    <Link href="/profile" onClick={() => setIsProfileOpen(false)} className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    <Link href="/dashboard" onClick={() => setIsProfileOpen(false)} className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                      <LayoutDashboard size={16} className="mr-2" /> Dashboard
+                    </Link>
+                    <Link href="/dashboard/profile" onClick={() => setIsProfileOpen(false)} className="flex items-center px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
                       <UserIcon size={16} className="mr-2" /> My Profile
                     </Link>
                     <button onClick={() => { setIsProfileOpen(false); signOut(); }} className="w-full flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-left">

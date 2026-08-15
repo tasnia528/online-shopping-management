@@ -13,20 +13,24 @@ Welcome to the Online Shopping Management System repository! This is a modern, f
 - **ODM:** Mongoose
 - **Authentication:** NextAuth.js (v5 beta)
 - **Security:** bcryptjs
+- **Payment Processing:** Stripe
 - **Email Service:** nodemailer
+- **PDF Generation:** jsPDF & jspdf-autotable
 - **Icons:** lucide-react
 
 ## Features Implemented
-- **User Authentication:** Robust authentication system with Sign Up, Sign In, and secure session management.
+- **User Authentication:** Robust authentication system with Sign Up, Sign In (with "Remember Me" sessions), and secure session management.
 - **Email Verification:** Account verification via email to ensure valid users.
-- **Password Management:** Forgot password and secure reset password flows.
+- **Password Management:** Forgot password and secure reset password flows, with UI toggles for password visibility.
 - **Product Catalog:** Browse and view comprehensive product listings.
 - **Categories:** Organize products by category for easy navigation.
 - **Product Details:** Dedicated product pages with specific item information.
 - **Reviews & Ratings:** Users can leave and view reviews for products.
 - **Wishlist:** Users can add their favorite items to a personalized wishlist.
-- **Shopping Cart & Checkout:** Seamless user flow from cart to checkout.
-- **User Profile:** Manage user details and view personal activity.
+- **Shopping Cart & Checkout:** Seamless user flow from cart to checkout, supporting dynamic Multi-Address selection.
+- **Payment Gateway:** Secure checkout options including Cash on Delivery (COD) and Credit Card payments via Stripe.
+- **Order Management:** Track order progress, view transaction history, and download high-quality PDF Invoices.
+- **User Dashboard & Profile:** Manage avatar uploads (with compression), address books, and view personalized activity in interactive accordion layouts.
 
 ## User Flow
 1. **Onboarding:** A user can register via the `/signup` page and will receive a verification email.
@@ -35,8 +39,9 @@ Welcome to the Online Shopping Management System repository! This is a modern, f
 4. **Browsing:** Users can explore products on the home page, browse by `/categories`, or view the full list at `/products`.
 5. **Product Interaction:** Selecting a product takes the user to its detail page (`/products/[id]`), where they can read reviews and add the item to their cart or wishlist.
 6. **Wishlist:** Users can view and manage their saved items on the `/wishlist` page.
-7. **Checkout:** Users can proceed to `/checkout` to finalize their purchase.
-8. **Profile Management:** Users can view and update their personal information via the `/profile` page.
+7. **Checkout:** Users can proceed to `/checkout` to select a shipping address, choose a payment method (Stripe/COD), and finalize their purchase. Upon success, a celebratory animation triggers.
+8. **Dashboard & Order Tracking:** Users can track their orders at `/dashboard/orders`, view progress animations, and instantly download PDF invoices.
+9. **Profile Management:** Users can update their avatar and manage their saved addresses via the `/dashboard/profile` page.
 
 ## APIs Connected
 The application uses the following internal Next.js API routes:
@@ -48,10 +53,16 @@ The application uses the following internal Next.js API routes:
 - `/api/auth/forgot-password` - Trigger password reset email
 - `/api/auth/reset-password` - Process password reset
 - `/api/auth/resend-code` - Resend verification/reset codes
-- `/api/profile` - User profile data operations
+- `/api/profile` - User profile data operations (Avatars & Addresses)
 
 **E-commerce Core:**
 - `/api/categories` - Fetch and manage product categories
 - `/api/products` - Fetch and manage products
 - `/api/reviews` - Product reviews and ratings
 - `/api/wishlist` - Manage user wishlist items
+
+**Orders & Payments:**
+- `/api/orders` - Fetch user's order history
+- `/api/orders/[id]` - Fetch details for a specific order (for Invoice generation)
+- `/api/orders/checkout` - Process new orders and handle inventory stock updates
+- `/api/create-payment-intent` - Generate Stripe payment intent secrets

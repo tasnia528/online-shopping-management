@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -19,6 +21,7 @@ export default function SignInPage() {
     setError("");
 
     try {
+      document.cookie = `remember-me=${rememberMe}; path=/; max-age=10`;
       const { signIn } = await import("next-auth/react");
       const res = await signIn("credentials", {
         redirect: false,
@@ -71,19 +74,48 @@ export default function SignInPage() {
             <div>
               <div className="flex justify-between items-center mb-2">
                 <label className="block text-sm font-bold text-slate-900 dark:text-white">Password</label>
-                <Link href="/forgot-password" className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors underline">Forgot password?</Link>
               </div>
-              <input 
-                type="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-none border-b border-slate-300 dark:border-slate-700 bg-transparent text-slate-900 dark:text-white focus:outline-none focus:border-slate-900 dark:focus:border-white transition-colors" 
-                placeholder="••••••••" 
-                required
-              />
+              <div className="relative">
+                <input 
+                  type={showPassword ? "text" : "password"} 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-4 py-3 rounded-none border-b border-slate-300 dark:border-slate-700 bg-transparent text-slate-900 dark:text-white focus:outline-none focus:border-slate-900 dark:focus:border-white transition-colors pr-12" 
+                  placeholder="••••••••" 
+                  required
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
             </div>
             
-            {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
+            <div className="flex items-center justify-between mt-2">
+              <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 cursor-pointer group">
+                <div className="relative flex items-center justify-center">
+                  <input 
+                    type="checkbox" 
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                    className="appearance-none w-5 h-5 border-2 border-slate-300 dark:border-slate-600 rounded bg-transparent checked:bg-slate-900 dark:checked:bg-white checked:border-slate-900 dark:checked:border-white transition-colors focus:outline-none focus:ring-2 focus:ring-slate-900/20 dark:focus:ring-white/20 cursor-pointer" 
+                  />
+                  {rememberMe && (
+                    <svg className="absolute w-3 h-3 text-white dark:text-black pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className="font-medium group-hover:text-slate-900 dark:group-hover:text-white transition-colors">Remember me</span>
+              </label>
+              
+              <Link href="/forgot-password" className="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors underline">Forgot password?</Link>
+            </div>
+            
+            {error && <p className="text-red-500 text-sm text-center mt-2">{error}</p>}
 
             <button disabled={loading} type="submit" className="w-full mt-4 py-4 bg-slate-900 dark:bg-white text-white dark:text-black font-bold uppercase tracking-wider text-sm hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors">
               {loading ? "Signing in..." : "Sign In"}

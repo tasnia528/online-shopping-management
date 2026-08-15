@@ -47,7 +47,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: user.email,
           name: user.name,
           role: user.role,
-          avatar: user.avatar,
         } as any;
       },
     }),
@@ -57,10 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.role = (user as any).role;
         token.id = user.id;
-        token.avatar = (user as any).avatar;
-      }
-      if (trigger === "update" && session?.avatar) {
-        token.avatar = session.avatar;
       }
       return token;
     },
@@ -68,7 +63,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token && session.user) {
         (session.user as any).role = token.role;
         (session.user as any).id = token.id;
-        (session.user as any).avatar = token.avatar;
+        
+        try {
+          await connectToDatabase();
+          const userDoc = await User.findById(token.id).select('avatar').lean();
+          if (userDoc?.avatar) {
+            (session.user as any).avatar = userDoc.avatar;
+          }
+        } catch (error) {
+          console.error("Failed to fetch avatar for session", error);
+        }
       }
       return session;
     },
