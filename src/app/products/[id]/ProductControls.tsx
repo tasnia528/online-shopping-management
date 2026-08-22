@@ -9,6 +9,9 @@ export default function ProductControls({ product }: { product: any }) {
   const cartItem = items.find(item => item.product._id === product._id.toString());
   const quantityInCart = cartItem?.quantity || 0;
 
+  const isAvailable = product.isActive !== false;
+  const isStockOut = product.stock === 0;
+
   const handleAdd = () => {
     addToCart({
       _id: product._id.toString(),
@@ -56,10 +59,15 @@ export default function ProductControls({ product }: { product: any }) {
       ) : (
         <button 
           onClick={handleAdd}
-          className="flex-1 w-full h-14 bg-slate-900 dark:bg-white text-white dark:text-black flex items-center justify-center gap-3 font-bold uppercase tracking-widest text-sm hover:bg-slate-800 dark:hover:bg-slate-200 transition-all hover:shadow-xl hover:-translate-y-1"
+          disabled={!isAvailable || isStockOut}
+          className={`flex-1 w-full h-14 flex items-center justify-center gap-3 font-bold uppercase tracking-widest text-sm transition-all shadow-sm ${
+            !isAvailable || isStockOut
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-gray-800 dark:text-gray-600'
+              : 'bg-slate-900 dark:bg-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-200 hover:shadow-xl hover:-translate-y-1'
+          }`}
         >
           <ShoppingCart size={20} />
-          Add to Cart
+          {!isAvailable ? 'Not Available' : isStockOut ? 'Stock Out' : 'Add to Cart'}
         </button>
       )}
     </div>

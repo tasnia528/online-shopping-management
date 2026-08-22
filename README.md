@@ -66,3 +66,14 @@ The application uses the following internal Next.js API routes:
 - `/api/orders/[id]` - Fetch details for a specific order (for Invoice generation)
 - `/api/orders/checkout` - Process new orders and handle inventory stock updates
 - `/api/create-payment-intent` - Generate Stripe payment intent secrets
+
+## Admin Features (Recent Updates)
+- **Real-time Admin Support Chat:** Real-time bi-directional customer support chat powered by Pusher WebSockets.
+- **Unread Message Sync:** Real-time badge indicators for unread customer messages synced flawlessly by circumventing Next.js Router Caching.
+- **Admin Notification System:** A global bell icon for the Admin Panel that highlights incoming customer messages and new orders, categorized by Date (Today, Yesterday, etc.).
+- **Product Management:** Full CRUD capabilities for the product catalog including advanced searching, categorical filtering, sorting, active status toggling, ImgBB image uploads, and **Bulk Excel Import** support.
+- **Customer Management:** Admins can view customer lists, block/unblock customers from chat capabilities, and send **Bulk Emails** to users using a Rich Text Editor (React-Quill-New compatible with React 19).
+- **Reviews Management:** Dedicated admin dashboard to view, approve, and delete product reviews left by customers.
+- **Analytics & Dashboard:** Quick high-level overview metrics (Total Revenue, Profit, Total Users, Active Orders) utilizing responsive visual charts via Recharts.
+- **UI/UX Consistency:** Enforced global dark theme across the entire application to establish a modern, sleek aesthetic.
+

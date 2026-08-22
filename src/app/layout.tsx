@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Pacifico } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import { CartProvider } from "@/context/CartContext";
@@ -35,15 +36,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable}`}>
-      <body suppressHydrationWarning className="flex flex-col min-h-screen">
+    <html lang="en" suppressHydrationWarning className={`dark ${geistSans.variable} ${geistMono.variable} ${pacifico.variable}`}>
+      <body suppressHydrationWarning className="flex flex-col min-h-screen bg-slate-950 text-slate-50">
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>
               <ThemeProvider
                 attribute="class"
-                defaultTheme="system"
-                enableSystem
+                defaultTheme="dark"
+                forcedTheme="dark"
                 disableTransitionOnChange
               >
                 <Navbar />
@@ -51,6 +52,7 @@ export default function RootLayout({
                   {children}
                 </main>
                 <Footer />
+                <ChatWidget />
               </ThemeProvider>
             </WishlistProvider>
           </CartProvider>

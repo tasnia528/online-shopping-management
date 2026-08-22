@@ -7,6 +7,7 @@ export interface IReview extends Document {
   comment: string;
   likes: mongoose.Types.ObjectId[]; // Array of user IDs who liked it
   adminReply?: string;
+  isHidden: boolean;
 }
 
 const ReviewSchema = new Schema<IReview>(
@@ -17,6 +18,7 @@ const ReviewSchema = new Schema<IReview>(
     comment: { type: String, required: true },
     likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     adminReply: { type: String },
+    isHidden: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

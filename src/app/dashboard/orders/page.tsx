@@ -349,8 +349,16 @@ export default function OrdersPage() {
                   </div>
                   
                   <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <h3 className="font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                      Customer Info
+                    </h3>
+                    <div className="text-sm text-slate-600 dark:text-slate-400 space-y-1 mb-6 bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm">
+                      <p className="font-bold text-slate-900 dark:text-white">{order.user?.name || 'Customer'}</p>
+                      <p>{order.user?.email}</p>
+                    </div>
+
                     <h3 className="font-bold text-slate-900 dark:text-white mb-4">Shipping Address</h3>
-                    <div className="text-sm text-slate-600 dark:text-slate-400 space-y-1 mb-6">
+                    <div className="text-sm text-slate-600 dark:text-slate-400 space-y-1 mb-6 bg-white dark:bg-slate-900 p-4 rounded-lg border border-slate-100 dark:border-slate-800 shadow-sm">
                       <p className="font-medium text-slate-900 dark:text-white">{order.shippingAddress?.street}</p>
                       <p>{order.shippingAddress?.city}, {order.shippingAddress?.state} {order.shippingAddress?.zipCode}</p>
                       <p>{order.shippingAddress?.country}</p>
@@ -359,7 +367,7 @@ export default function OrdersPage() {
                     <button 
                       onClick={() => handleDownloadInvoice(order)} 
                       disabled={downloadingOrderId === order._id}
-                      className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 font-bold rounded-lg hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors text-sm disabled:opacity-50"
+                      className="flex items-center justify-center gap-2 w-full py-3 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition-colors text-sm disabled:opacity-50 shadow-md shadow-indigo-600/20"
                     >
                       {downloadingOrderId === order._id ? (
                         <>Generating PDF...</>

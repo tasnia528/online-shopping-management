@@ -14,14 +14,23 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, viewMode = "grid4", showRating = false }: ProductCardProps) {
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-  const { addToCart } = useCart();
+  const { addToCart, items } = useCart();
 
   const isListMode = viewMode === "list";
+  
+  const isAvailable = product.isActive !== false;
+  const isStockOut = product.stock === 0;
+  const isInCart = items.some(item => item.product._id === product._id);
 
   return (
-    <div className={`group ${isListMode ? "flex flex-col sm:flex-row gap-6 bg-slate-50 dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-800" : "flex flex-col"}`}>
+    <div className={`group ${isListMode ? "flex flex-col sm:flex-row gap-6 bg-slate-50 dark:bg-slate-900 p-4 border border-slate-200 dark:border-slate-800" : "flex flex-col"} ${!isAvailable ? 'opacity-50 grayscale-[50%]' : ''}`}>
       <div className={`relative bg-slate-100 dark:bg-slate-900 overflow-hidden ${isListMode ? "w-full sm:w-64 h-48 sm:h-auto flex-shrink-0" : "w-full h-80 mb-4"}`}>
-        {/* New Badge (optional, based on logic or just hardcoded for home page new arrivals if needed, omitted here for generic use or we can add a prop) */}
+        {/* Status Badges */}
+        {!isAvailable ? (
+          <span className="absolute top-3 left-3 bg-gray-900 text-white text-xs font-bold px-2 py-1 z-20">NOT AVAILABLE</span>
+        ) : isStockOut ? (
+          <span className="absolute top-3 left-3 bg-red-600 text-white text-xs font-bold px-2 py-1 z-20">STOCK OUT</span>
+        ) : null}
         
         <Link href={`/products/${product._id}`} className="absolute inset-0 z-0">
           <FallbackImage 
@@ -51,16 +60,18 @@ export default function ProductCard({ product, viewMode = "grid4", showRating = 
             <Heart size={20} className={isInWishlist(product._id) ? "fill-current" : ""} />
           </button>
           
-          <button 
-            onClick={(e) => {
-              e.preventDefault();
-              addToCart(product);
-            }}
-            className="w-12 h-12 rounded-full bg-white text-slate-900 flex items-center justify-center hover:bg-slate-100 transition-all transform translate-y-8 group-hover:translate-y-0 shadow-lg delay-75"
-            title="Add to Cart"
-          >
-            <ShoppingCart size={20} />
-          </button>
+          {(!isInCart && isAvailable && !isStockOut) && (
+            <button 
+              onClick={(e) => {
+                e.preventDefault();
+                addToCart(product);
+              }}
+              className="w-12 h-12 rounded-full bg-white text-slate-900 flex items-center justify-center hover:bg-slate-100 transition-all transform translate-y-8 group-hover:translate-y-0 shadow-lg delay-75"
+              title="Add to Cart"
+            >
+              <ShoppingCart size={20} />
+            </button>
+          )}
           
           <Link 
             href={`/products/${product._id}`}

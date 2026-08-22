@@ -21,6 +21,7 @@ export interface IUser extends Document {
   role: 'customer' | 'admin';
   isVerified: boolean;
   avatar?: string;
+  isChatBlocked?: boolean;
   verificationCode?: string;
   verificationCodeExpires?: Date;
   resetPasswordToken?: string;
@@ -52,6 +53,7 @@ const UserSchema = new Schema<IUser>(
     role: { type: String, enum: ['customer', 'admin'], default: 'customer' },
     isVerified: { type: Boolean, default: false },
     avatar: { type: String },
+    isChatBlocked: { type: Boolean, default: false },
     verificationCode: { type: String },
     verificationCodeExpires: { type: Date },
     resetPasswordToken: { type: String },

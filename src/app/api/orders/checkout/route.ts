@@ -4,6 +4,8 @@ import connectDB from '@/lib/db';
 import { Order } from '@/models/Order';
 import { User } from '@/models/User';
 import { Product } from '@/models/Product';
+import { Notification } from '@/models/Notification';
+import { pusherServer } from '@/lib/pusher';
 import { sendInvoiceEmail } from '@/lib/mail';
 import Stripe from 'stripe';
 
@@ -115,6 +117,18 @@ export async function POST(req: NextRequest) {
       await sendInvoiceEmail(user.email, invoiceOrderData, user);
     } catch (mailError) {
       console.error("Failed to send invoice email:", mailError);
+    }
+
+    // Notify Admin
+    try {
+      await Notification.create({
+        user: 'admin',
+        type: 'order_placed',
+        message: `New order #${newOrder._id} placed by ${user.name} for $${finalAmount.toFixed(2)}.`,
+        link: '/admin/orders',
+      });
+    } catch (notifError) {
+      console.error("Failed to create admin notification:", notifError);
     }
 
     return NextResponse.json({ success: true, orderId: newOrder._id }, { status: 201 });

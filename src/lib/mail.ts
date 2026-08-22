@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
+export const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.ethereal.email',
   port: parseInt(process.env.SMTP_PORT || '587'),
   auth: {
@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@shoppy.com';
+export const FROM_EMAIL = process.env.FROM_EMAIL || 'noreply@shoppy.com';
 
 export const sendVerificationEmail = async (email: string, code: string) => {
   const mailOptions = {

@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Globe, MessageCircle, Camera, Video, Mail, Phone, MapPin } from "lucide-react";
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname === '/admin-chat') return null;
+
   return (
     <footer className="bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 mt-auto">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6">
