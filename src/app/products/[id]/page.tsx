@@ -6,6 +6,7 @@ import ProductControls from "./ProductControls";
 import ReviewSection from "./ReviewSection";
 import connectToDatabase from "@/lib/db";
 import { Product } from "@/models/Product";
+import { Category } from "@/models/Category"; // Ensure Category is registered
 import mongoose from "mongoose";
 
 export default async function ProductDetailsPage({ params }: { params: Promise<{ id: string }> }) {
