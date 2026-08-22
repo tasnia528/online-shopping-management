@@ -73,7 +73,7 @@ export default async function ProductDetailsPage({ params }: { params: Promise<{
             <a href="#reviews" className="text-sm text-slate-500 hover:text-slate-900 dark:hover:text-white underline">Reviews</a>
           </div>
 
-          <p className="text-3xl font-bold text-slate-900 dark:text-white mb-8">${product.price.toFixed(2)}</p>
+          <p className="text-3xl font-bold text-slate-900 dark:text-white mb-8">${(product.price || 0).toFixed(2)}</p>
           
           <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed border-b border-slate-200 dark:border-slate-800 pb-10">
             {product.description}
